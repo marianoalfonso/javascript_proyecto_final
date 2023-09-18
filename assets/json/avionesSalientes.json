@@ -1,0 +1,38 @@
+[
+    { 
+        "matricula": "HHH888", 
+        "compania": "UNITED AIRLINES", 
+        "estado": "saliente", 
+        "logo": "../assets/img/aerolineas/United_Airlines.png"
+        },
+        { 
+        "matricula": "III999", 
+        "compania": "AEROLINEAS ARGENTINAS", 
+        "estado": "saliente", 
+        "logo": "../assets/img/aerolineas/Aerolineas_Argentinas.png"
+        },
+        { 
+        "matricula": "ADS123", 
+        "compania": "DELTA AIRLINES", 
+        "estado": "saliente", 
+        "logo": "../assets/img/aerolineas/Delta_Airlines.png"
+        },
+        { 
+        "matricula": "ODF222", 
+        "compania": "DELTA AIRLINES", 
+        "estado": "saliente", 
+        "logo": "../assets/img/aerolineas/Delta_Airlines.png"
+        },
+        { 
+        "matricula": "DLF234", 
+        "compania": "AEROLINEAS ARGENTINAS", 
+        "estado": "saliente", 
+        "logo": "../assets/img/aerolineas/Aerolineas_Argentinas.png"
+        },
+        { 
+        "matricula": "CDS977", 
+        "compania": "AEROLINEAS ARGENTINAS", 
+        "estado": "saliente", 
+        "logo": "../assets/img/aerolineas/Aerolineas_Argentinas.png"
+        }
+]

@@ -1,0 +1,26 @@
+[
+    { 
+    "matricula": "AAA111", 
+    "compania": "AEROLINEAS ARGENTINAS", 
+    "estado": "aterrizado", 
+    "logo": "../assets/img/aerolineas/Aerolineas_Argentinas.png"
+    },
+    { 
+    "matricula": "CCC333", 
+    "compania": "UNITED AIRLINES", 
+    "estado": "aterrizado", 
+    "logo": "../assets/img/aerolineas/United_Airlines.png"
+    },
+    { 
+    "matricula": "DDD444", 
+    "compania": "ALITALIA", 
+    "estado": "aterrizado", 
+    "logo": "../assets/img/aerolineas/Alitalia.png"
+    },
+    { 
+    "matricula": "EEE555", 
+    "compania": "AEROLINEAS ARGENTINAS", 
+    "estado": "aterrizado", 
+    "logo": "../assets/img/aerolineas/Aerolineas_Argentinas.png"
+    }
+]

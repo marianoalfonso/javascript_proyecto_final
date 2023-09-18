@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    /* height: 100%;
+    width: 100%; */
+}
+
+.grid-container {
+    display: grid;
+    grid-template-rows: 4rem auto;
+    grid-template-columns: 1fr 1fr 1fr 2fr;
+    grid-template-areas:
+    "informacion informacion informacion informacion"
+    "visualizacion visualizacion visualizacion acciones"
+}
+
+.grid-container header {
+    background-color: red;
+    grid-area: informacion;
+}   
+
+.panel-visualizacion {
+    background-color: green;
+    grid-area: visualizacion;
+}
+
+.panel-botones {
+    background-color: grey;
+    grid-area: botones;
+}
+
+.panel-acciones {
+    background-color: cyan;
+    grid-area: acciones;
+}
+
+.aeronave {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(150, 243, 207);
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 15px;
+    margin: 10px;
+}
+
+.botonAeronave {
+    background-color: red;
+    position: relative;
+    right: 0;
+
+}
+
+#btnEmergencia {
+    background-color: chartreuse;
+    font-size: smaller;
+    border-radius: 10px;
+}
+
+.elementoTarjeta {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    flex-wrap: nowrap;
+    flex-flow: column;
+    border: 2px solid black;
+    height: auto;
+}
+
+#imagenTarjeta {
+    background-color: rebeccapurple;
+    height: 30px;
+    width: 60px;
+}

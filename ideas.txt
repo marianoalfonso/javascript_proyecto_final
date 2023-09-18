@@ -1,0 +1,39 @@
+definir cantidad maxima de aviones llegando
+definir cantidad maxima de aviones saliendo
+
+objeto avion
+compania
+
+array avionesLlegando
+matricula
+compania
+
+
+
+array avionesSaliendo
+
+
+listar aviones activos en el area
+1. listar aviones llegando
+2. listar aviones saliendo
+
+recibir avion al area de control
+1. agregar avion al listado de aviones llegando
+2. segun el ID de recepcion, se define la prioridad de aterrizaje
+3. puede declararse la emergencia en un avion
+	3.1. se cambia el ID a 1
+	3.2. aterrizar avion
+
+aterrizar avion
+1. liberar avion del listado de aviones llegando
+2. almacenar avion en listado de aviones en tierra
+
+despegar avion
+1. liberar avion del listado de aviones en tierra
+2. agregar avion al listado de aviones saliendo
+3. liberar avion del listado de aviones saliendo
+4. en caso de emergencia
+	4.1. liberar avion del listado de aviones saliendo
+	4.2. agregar avion al listado de aviones llegando con ID 1
+	4.3. aterrizar avion
+

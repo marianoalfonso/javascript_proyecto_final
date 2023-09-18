@@ -1,0 +1,32 @@
+[
+    { 
+        "matricula": "FFF666", 
+        "compania": "ALITALIA", 
+        "estado": "entrante", 
+        "logo": "../assets/img/aerolineas/Alitalia.png"
+      },
+      { 
+        "matricula": "GGG777", 
+        "compania": "AEROLINEAS ARGENTINAS", 
+        "estado": "entrante", 
+        "logo": "../assets/img/aerolineas/Aerolineas_Argentinas.png"
+      },
+      { 
+        "matricula": "MDF222", 
+        "compania": "AEROLINEAS ARGENTINAS", 
+        "estado": "entrante", 
+        "logo": "../assets/img/aerolineas/Aerolineas_Argentinas.png"
+      },
+      { 
+        "matricula": "RJT566", 
+        "compania": "UNITED AIRLINES", 
+        "estado": "entrante", 
+        "logo": "../assets/img/aerolineas/United_Airlines.png"
+      },
+      { 
+        "matricula": "MDF222", 
+        "compania": "UNITED AIRLINES", 
+        "estado": "entrante", 
+        "logo": "../assets/img/aerolineas/United_Airlines.png"
+      }
+]
