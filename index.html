@@ -1,39 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./css/style.css" />
-    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script defer src="./js/script.js"></script>
-    <!-- <script defer src="./js/sandbox.js"></script> -->
-  </head>
-  <body>
-    <section class="grid-container">
-      <header class="panel-informacion" id="panel-informacion">
-        <p class="mensaje" id="mensaje">informacion general</p>
-      </header>
-      <div class="panel-visualizacion" id="panel-visualizacion">
-        panel de visualizacion
-        <div class="panel-botones" id="panel-botones">botones</div>
-      </div>
 
-      <div class="panel-acciones" id="panel-acciones">
-        panel de acciones
-        <button id="verEspacioAereo">ver espacio aereo</button>
-        <button class="btnAcciones" id="recibirAeronave">
-          recibir aeronave al espacio aereo
-        </button>
-        <button class="btnAcciones" id="aterrizarAeronave">
-          aterrizar aeronave
-        </button>
-        <button class="btnAcciones" id="btnBuscarAerolinea">buscar</button>
-        <button class="btnAcciones" id="avionesEnTierra">
-          ver aeronaves en tierra
-        </button>
-      </div>
-    </section>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>control de trafico aereo</title>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <link rel="stylesheet" href="./css/style.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script defer src="./js/script.js"></script>
+  <!-- <script defer src="./js/sandbox.js"></script> -->
+</head>
+
+<body>
+  <section class="grid-container">
+    <header class="panel-informacion" id="panel-informacion">
+      <p class="mensaje" id="mensaje">informacion general</p>
+    </header>
+    <div class="panel-visualizacion" id="panel-visualizacion">
+    </div>
+
+    <div class="panel-acciones">
+      <h4>panel de acciones</h4>
+      <button id="verEspacioAereo">ver espacio aereo</button>
+      <button class="btnAcciones" id="avionesEnTierra">ver aeronaves en tierra</button>
+
+      <button class="btnAcciones" id="aterrizarAeronave">
+        aterrizar aeronave
+      </button>
+
+      <article class="ingresoEspacioAereo">
+        <h4>ingreso al espacio aereo</h4>
+        <div class="recibirAeronave">
+          <label for="matricula">matricula</label>
+          <input type="text" id="matricula">
+          <select id="companiaAerea">
+            <option value="AEROLINEAS ARGENTINAS">Aerolineas Argentinas</option>
+            <option value="ALITALIA">Alitalia</option>
+            <option value="DELTA">Delta Airlines</option>
+            <option value="UNITED AIRLINES">United Airlines</option>
+          </select>
+          <button class="btnAcciones" id="recibirAeronave">autorizar</button>
+        </div>
+      </article>
+
+
+      <!-- busqueda de aerolinea -->
+      <article class="busquedaPorAerolinea">
+        <h4>busqueda por aerolinea</h4>
+        <div class="busquedaAerolinea" id="busquedaAerolinea">
+          <label for="aerolinea">ingrese aerolinea</label>
+          <input type="text" id="nombreAerolinea">
+          <button class="btnAcciones" id="btnBuscarAerolinea">buscar</button>
+        </div>
+      </article>
+
+      <article class="panel-estadisticas" id="panel-estadisticas">
+        <h4>panel de estadisticas</h4>
+        <div class="estadisticas">
+          
+        </div>
+      </article>
+
+    </div>
+  </section>
+</body>
+
 </html>

@@ -6,6 +6,7 @@ const logoAerolineas = "../assets/img/aerolineas/Aerolineas_Argentinas.png";
 const logoDelta = "../assets/img/aerolineas/Delta_Airlines.png";
 const logoUnited = "../assets/img/aerolineas/United_Airlines.png";
 const logoAlitalia = "../assets/img/aerolineas/Alitalia.png";
+const logoAlerta = "../assets/img/varios/emergencia.png"
 
 // declaracion de politicas
 let polIntentos = 3;
@@ -18,6 +19,7 @@ let avionesSalientes = [];
 // genera un listado del estado actual del espacio aereo
 function verEspacioAereo() {
   listarAviones(avionesEntrantes.concat(avionesSalientes));
+  mostrarEstadisticas()
 }
 
 function verAvionesEnTierra() {
@@ -50,66 +52,67 @@ function agregarAvion(array, matric, comp, est, logo) {
 
 // lista los aviones contenidos el el array recibido como parametro
 function listarAviones(array) {
+
   let espacioAereo = document.getElementById("panel-visualizacion");
   espacioAereo.innerHTML = "";
 
+  let tituloPanelVisualizacion = document.createElement("h4")
+  tituloPanelVisualizacion.classList = "tituloPanelVisualizacion"
+  tituloPanelVisualizacion.innerHTML = "espacio aereo generado dinamicamente"
+  espacioAereo.appendChild(tituloPanelVisualizacion)
+
+
   array.forEach((element) => {
     console.log(
-      `${array.indexOf(element) + 1} - ${element.matricula} ( ${
-        element.compania
+      `${array.indexOf(element) + 1} - ${element.matricula} ( ${element.compania
       }) - ${element.estado}`
     );
     let aeronaveEnEspacioAereo = document.createElement("div");
     aeronaveEnEspacioAereo.draggable = true
     aeronaveEnEspacioAereo.className = "aeronave";
-    aeronaveEnEspacioAereo.innerHTML = `<div class="elementoTarjeta" ><img id="imagenTarjeta" src="${
-      element.logo
-    }" alt="logo compania"></div>
-                                            <div class="elementoTarjeta"><p>${
-                                              element.compania
-                                            }</p></div>                                    
-                                            <div class="elementoTarjeta"><p>${
-                                              element.matricula
-                                            }</p></div>
-                                            <div class="elementoTarjeta"><p>baliza: ${
-                                              array.indexOf(element) + 1
-                                            }</p></div>
-                                            <div class="elementoTarjeta"><p>${
-                                              element.estado
-                                            }</p></div>`;
+    aeronaveEnEspacioAereo.innerHTML = `<div class="elementoTarjeta" ><img id="imagenTarjeta" src="${element.logo
+      }" alt="logo compania"></div>
+                                            <div class="elementoTarjeta"><p>${element.compania
+      }</p></div>                                    
+                                            <div class="elementoTarjeta"><p>${element.matricula
+      }</p></div>
+                                            <div class="elementoTarjeta"><p>baliza: ${array.indexOf(element) + 1
+      }</p></div>
+                                            <div class="elementoTarjeta"><p>${element.estado
+      }</p></div>`;
 
     espacioAereo.appendChild(aeronaveEnEspacioAereo);
 
     if (element.estado === "saliente") {
-        let botonEmergencia = document.createElement("button")
-        botonEmergencia.className = "botonAeronave"
-        botonEmergencia.id = "botonEmergencia"
-        botonEmergencia.addEventListener("click", () => declararEmergencia(element.matricula))
-        botonEmergencia.innerText = "declarar emergencia"
-        espacioAereo.appendChild(botonEmergencia)
+      let botonEmergencia = document.createElement("button")
+      botonEmergencia.className = "botonAeronave"
+      botonEmergencia.id = "botonEmergencia"
+      botonEmergencia.addEventListener("click", () => declararEmergencia(element.matricula))
+      botonEmergencia.innerText = "declarar emergencia"
+      espacioAereo.appendChild(botonEmergencia)
 
-        let botonLiberar = document.createElement("button")
-        botonLiberar.className = "botonAeronave"
-        botonLiberar.id = "btnLiberarAeronave"
-        botonLiberar.addEventListener("click", () => liberarAvion(element.matricula))
-        botonLiberar.innerText = "liberar aeronave"
-        espacioAereo.appendChild(botonLiberar)
-        
+      let botonLiberar = document.createElement("button")
+      botonLiberar.className = "botonAeronave"
+      botonLiberar.id = "btnLiberarAeronave"
+      botonLiberar.addEventListener("click", () => liberarAvion(element.matricula))
+      botonLiberar.innerText = "liberar aeronave"
+      espacioAereo.appendChild(botonLiberar)
+
     } else if (element.estado === "aterrizado") {
-        let botonAutorizarDespegue = document.createElement("button")
-        botonAutorizarDespegue.className = "botonAeronave"
-        botonAutorizarDespegue.id = "btnAutorizarDespegue"
-        botonAutorizarDespegue.addEventListener("click", () => despegarAvion(element.matricula))
-        botonAutorizarDespegue.innerText = "autorizar despegue"
-        espacioAereo.appendChild(botonAutorizarDespegue)
+      let botonAutorizarDespegue = document.createElement("button")
+      botonAutorizarDespegue.className = "botonAeronave"
+      botonAutorizarDespegue.id = "btnAutorizarDespegue"
+      botonAutorizarDespegue.addEventListener("click", () => despegarAvion(element.matricula))
+      botonAutorizarDespegue.innerText = "autorizar despegue"
+      espacioAereo.appendChild(botonAutorizarDespegue)
 
     } else if (element.estado === "entrante") {
-        let botonEmergencia = document.createElement("button")
-        botonEmergencia.className = "botonAeronave"
-        botonEmergencia.id = "botonEmergencia"
-        botonEmergencia.addEventListener("click", () => declararEmergencia(element.matricula))
-        botonEmergencia.innerText = "declarar emergencia"
-        espacioAereo.appendChild(botonEmergencia)
+      let botonEmergencia = document.createElement("button")
+      botonEmergencia.className = "botonAeronave"
+      botonEmergencia.id = "botonEmergencia"
+      botonEmergencia.addEventListener("click", () => declararEmergencia(element.matricula))
+      botonEmergencia.innerText = "declarar emergencia"
+      espacioAereo.appendChild(botonEmergencia)
 
     }
 
@@ -122,10 +125,17 @@ function listarAviones(array) {
 function recibirAvion(matric, comp) {
   // valida formato de la matricula
   if (!validarMatricula(matric.toUpperCase())) {
-    alert("INFORMACION (ERROR) - matricula no valida");
+
+    mostrarAlerta(`MATRICULA NO VALIDA !!!
+   .......................................
+    El formato debe ser ###000 (ej: ABC123)`)
+    
     // valida existencia de la matricula
   } else if (validarExistenciaMatricula(matric.toUpperCase())) {
     alert("INFORMACION (ERROR) - matricula existente");
+    mostrarAlerta(`MATRICULA EXISTENTE !!!
+    .......................................
+    El identificador es unico a nivel global`)
   } else {
     let logo = "";
     switch (comp) {
@@ -157,11 +167,9 @@ function recibirAvion(matric, comp) {
       "aeronavesEntrantes",
       JSON.stringify(avionesEntrantes)
     );
-
-    alert(
-      `INFORMACION - (la aeronave ${matric.toUpperCase()} de la compania ${comp} ha sido recibido en el espacio aereo)`
-    );
-    verEspacioAereo();
+    mostrarAlerta(`la aeronave ${matric.toUpperCase()} de la compania ${comp} 
+                   ha sido recibido en el espacio aereo`)
+    verEspacioAereo()
   }
 }
 
@@ -192,20 +200,20 @@ function liberarAvion(matric) {
 function declararEmergencia(matric) {
   // verificar existencia de emergencia sin resolver
   if (localStorage.getItem("emergenciaHora")) {
-    alert(
-      ">>> ALERTA <<< (debe resolverse la emergencia en curso aterrizando la aeronave antes de poder declarar otra) \n > matricula en emergencia: " +
-        localStorage.getItem("emergenciaMatricula") +
-        "\n > emergencia hora: " +
-        localStorage.getItem("emergenciaHora")
-    );
+    mostrarAlerta(`debe resolverse la emergencia en curso aterrizando la aeronave antes de poder declarar otra 
+      ...........................................................................................
+      matricula en emergencia: ${localStorage.getItem("emergenciaMatricula")} 
+      emergencia hora: ${localStorage.getItem("emergenciaHora")}`)
+
     return;
   }
 
   // si no existen emergencias sin resolver, permite declarar una nueva emergencia
-  alert(
-    ">>> ALERTA <<< (emergencia declarada para la matricula: " + matric + ")"
-  );
-  
+  // alert(
+  //   ">>> ALERTA <<< (emergencia declarada para la matricula: " + matric + ")"
+  // );
+  mostrarMensaje("alerta", `emergencia declarada para la matricula ${matric}`, logoAlerta)
+
   const resultadoBusquedaEntrantes = avionesEntrantes.find(
     (avion) => avion.matricula === matric
   );
@@ -333,11 +341,6 @@ function buscarCompania(busqueda) {
     resultadoSalientes.concat(resultadoAterrizados)
   );
 
-  console.log(resultadoEntrantes);
-  console.log(resultadoSalientes);
-  console.log(resultadoAterrizados);
-  console.log(resultado);
-
   // ordeno el resultado de la concatenacion de arrays por matricula
   resultado.sort((aeroNave1, aeroNave2) => {
     if (aeroNave1.matricula === aeroNave2.matricula) {
@@ -440,6 +443,47 @@ function mostrarMensaje(title, text, imageUrl) {
   });
 }
 
+// muestra un mensaje de alerta personalizado
+function mostrarAlerta(texto) {
+  Toastify({
+    text: texto,
+    duration: 6000,
+    newWindow: true,
+    close: true,
+    gravity: "top",
+    position: "right",
+    stopOnFocus: false, // Prevents dismissing of toast on hover
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+    onClick: function () { } // Callback after click
+  }).showToast();
+}
+
+// muestra las estadisticas generales
+function mostrarEstadisticas() {
+  let panelEstadisticas = document.getElementById("panel-estadisticas")
+  panelEstadisticas.innerHTML = ""
+ 
+  let cantidadAvionesEntrantes = document.createElement("h5")
+  cantidadAvionesEntrantes.className = "mensajeEstadisticas"
+  cantidadAvionesEntrantes.id = "cantidadAvionesEntrantes"
+  cantidadAvionesEntrantes.innerHTML = `aviones en espera de autorizacion para el aterrizaje: ${avionesEntrantes.length}`
+
+  let cantidadAvionesSalientes = document.createElement("h5")
+  cantidadAvionesSalientes.className = "mensajeEstadisticas"
+  cantidadAvionesSalientes.id = "cantidadAvionesSalientes"
+  cantidadAvionesSalientes.innerHTML = `aviones en salida del espacio aereo: ${avionesSalientes.length}`
+ 
+  let cantidadAvionesEnTierra = document.createElement("h5")
+  cantidadAvionesEnTierra.className = "mensajeEstadisticas"
+  cantidadAvionesEnTierra.id = "cantidadAvionesEnTierra"
+  cantidadAvionesEnTierra.innerHTML = `aviones en tierra: ${avionesEnTierra.length}`
+  panelEstadisticas.appendChild(cantidadAvionesEntrantes)
+  panelEstadisticas.appendChild(cantidadAvionesSalientes)
+  panelEstadisticas.appendChild(cantidadAvionesEnTierra)
+}
+
 const login = () => {
   // let loginSuccessfull = false;
   // for (let a = polIntentos; a > 0; a--) {
@@ -456,9 +500,6 @@ const login = () => {
 };
 
 if (login()) {
-  cargarArrays();
-
-  Swal.fire("bienvenido !!!", "espacio aereo actual cargado", "info");
 
   // lista en pantalla el espacio aereo
   let btnVerEspacioAereo = document.getElementById("verEspacioAereo")
@@ -489,31 +530,34 @@ if (login()) {
         default:
           logo = "";
       }
-      agregarAvion(avionesEnTierra, matric, aerolinea, "aterrizado", logo);
-      aterrizarAvion();
+      agregarAvion(avionesEnTierra, matric, aerolinea, "aterrizado", logo)
+      aterrizarAvion()
       mostrarMensaje(
         "aterrizaje",
         `la aeronave con matricula ${matric} a completado el procedimiento de aterrizaje`,
         logo
       );
     } else {
-      alert("INFORMACION (no hay aviones en espera para el aterrizaje)");
+      alert("INFORMACION (no hay aviones en espera para el aterrizaje)")
     }
-  };
+  }
 
   // buscar y listar aviones de una aerolinea
-  let busqueda = document.getElementById("busquedaAerolinea");
-  let btnBuscarAerolinea = document.getElementById("btnBuscarAerolinea");
+  let busqueda = document.getElementById("nombreAerolinea")
+  let btnBuscarAerolinea = document.getElementById("btnBuscarAerolinea")
   btnBuscarAerolinea.addEventListener("click", () => {
-    buscarCompania(busqueda.value.toUpperCase());
-  });
+    buscarCompania(busqueda.value.toUpperCase())
+    busqueda.value = ""
+  })
 
   //recibir avion al espacio aereo
-  let matricula = document.getElementById("matricula");
-  let companiaAerea = document.getElementById("companiaAerea");
-  btnRecibirAeronave = document.getElementById("recibirAeronave");
+  let matricula = document.getElementById("matricula")
+  let companiaAerea = document.getElementById("companiaAerea")
+  btnRecibirAeronave = document.getElementById("recibirAeronave")
   btnRecibirAeronave.addEventListener("click", () => {
-    recibirAvion(matricula.value, companiaAerea.value);
+    recibirAvion(matricula.value, companiaAerea.value)
+    matricula.value = ""
+    companiaAerea.value = ""
   });
 
   // ver aviones en tierra
@@ -542,6 +586,10 @@ if (login()) {
   // } else {
   //     alert("existe")
   // }
+
+    cargarArrays();
+    Swal.fire("bienvenido !!!", "espacio aereo actual cargado", "info");
+
 } else {
   console.log("el usuario ha sido bloqueado");
 }
