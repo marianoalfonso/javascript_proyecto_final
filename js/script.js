@@ -129,7 +129,7 @@ function recibirAvion(matric, comp) {
     mostrarAlerta(`MATRICULA NO VALIDA !!!
    .......................................
     El formato debe ser ###000 (ej: ABC123)`)
-    
+
     // valida existencia de la matricula
   } else if (validarExistenciaMatricula(matric.toUpperCase())) {
     alert("INFORMACION (ERROR) - matricula existente");
@@ -463,28 +463,36 @@ function mostrarAlerta(texto) {
 // muestra las estadisticas generales
 function mostrarEstadisticas() {
   let panelEstadisticas = document.getElementById("panel-estadisticas")
-  panelEstadisticas.innerHTML = ""
- 
-  let cantidadAvionesEntrantes = document.createElement("h5")
-  cantidadAvionesEntrantes.className = "mensajeEstadisticas"
-  cantidadAvionesEntrantes.id = "cantidadAvionesEntrantes"
-  cantidadAvionesEntrantes.innerHTML = `aviones en espera de autorizacion para el aterrizaje: ${avionesEntrantes.length}`
+  // panelEstadisticas.innerHTML = ""
 
-  let cantidadAvionesSalientes = document.createElement("h5")
-  cantidadAvionesSalientes.className = "mensajeEstadisticas"
-  cantidadAvionesSalientes.id = "cantidadAvionesSalientes"
-  cantidadAvionesSalientes.innerHTML = `aviones en salida del espacio aereo: ${avionesSalientes.length}`
- 
-  let cantidadAvionesEnTierra = document.createElement("h5")
-  cantidadAvionesEnTierra.className = "mensajeEstadisticas"
-  cantidadAvionesEnTierra.id = "cantidadAvionesEnTierra"
-  cantidadAvionesEnTierra.innerHTML = `aviones en tierra: ${avionesEnTierra.length}`
-  panelEstadisticas.appendChild(cantidadAvionesEntrantes)
-  panelEstadisticas.appendChild(cantidadAvionesSalientes)
-  panelEstadisticas.appendChild(cantidadAvionesEnTierra)
+
+  let estadistica_01 = document.getElementById("estadistica_01")
+  estadistica_01.innerHTML = avionesEntrantes.length
+
+  // let cantidadAvionesEntrantes = document.createElement("h5")
+  // cantidadAvionesEntrantes.className = "mensajeEstadisticas"
+  // cantidadAvionesEntrantes.id = "cantidadAvionesEntrantes"
+  // cantidadAvionesEntrantes.innerHTML = `aviones en espera de autorizacion para el aterrizaje: ${avionesEntrantes.length}`
+
+  // let cantidadAvionesSalientes = document.createElement("h5")
+  // cantidadAvionesSalientes.className = "mensajeEstadisticas"
+  // cantidadAvionesSalientes.id = "cantidadAvionesSalientes"
+  // cantidadAvionesSalientes.innerHTML = `aviones en salida del espacio aereo: ${avionesSalientes.length}`
+
+  // let cantidadAvionesEnTierra = document.createElement("h5")
+  // cantidadAvionesEnTierra.className = "mensajeEstadisticas"
+  // cantidadAvionesEnTierra.id = "cantidadAvionesEnTierra"
+  // cantidadAvionesEnTierra.innerHTML = `aviones en tierra: ${avionesEnTierra.length}`
+  // panelEstadisticas.appendChild(cantidadAvionesEntrantes)
+  // panelEstadisticas.appendChild(cantidadAvionesSalientes)
+  // panelEstadisticas.appendChild(cantidadAvionesEnTierra)
 }
 
+
+
+
 const login = () => {
+  alert("login")
   // let loginSuccessfull = false;
   // for (let a = polIntentos; a > 0; a--) {
   //     let inputPassword = prompt("ingrese password: ")
@@ -499,7 +507,32 @@ const login = () => {
   return true;
 };
 
+// consulto el clima de Buenos Aires
+const chequearClima = () => {
+  fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/buenos%20aires%2C%20argentina?unitGroup=metric&key=4UA8K4ZX2USFRGHKDXLGMUQ5Q&contentType=json", {
+    "method": "GET",
+    "headers": {
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+
+
+
+
+
+      console.log(data.days[0].datetime)
+      // console.log(data)
+    })
+    .catch(err => {
+      console.error(err);
+    });
+
+}
+
 if (login()) {
+
+  // chequearClima()
 
   // lista en pantalla el espacio aereo
   let btnVerEspacioAereo = document.getElementById("verEspacioAereo")
@@ -587,8 +620,8 @@ if (login()) {
   //     alert("existe")
   // }
 
-    cargarArrays();
-    Swal.fire("bienvenido !!!", "espacio aereo actual cargado", "info");
+  cargarArrays();
+  Swal.fire("bienvenido !!!", "espacio aereo actual cargado", "info");
 
 } else {
   console.log("el usuario ha sido bloqueado");
