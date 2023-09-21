@@ -70,16 +70,11 @@ function listarAviones(array) {
     let aeronaveEnEspacioAereo = document.createElement("div");
     aeronaveEnEspacioAereo.draggable = true
     aeronaveEnEspacioAereo.className = "aeronave";
-    aeronaveEnEspacioAereo.innerHTML = `<div class="elementoTarjeta" ><img id="imagenTarjeta" src="${element.logo
-      }" alt="logo compania"></div>
-                                            <div class="elementoTarjeta"><p>${element.compania
-      }</p></div>                                    
-                                            <div class="elementoTarjeta"><p>${element.matricula
-      }</p></div>
-                                            <div class="elementoTarjeta"><p>baliza: ${array.indexOf(element) + 1
-      }</p></div>
-                                            <div class="elementoTarjeta"><p>${element.estado
-      }</p></div>`;
+    aeronaveEnEspacioAereo.innerHTML = `<div class="elementoTarjeta" ><img id="imagenTarjeta" class=""imagenTarjeta" src="${element.logo}" alt="logo compania"></div>
+      <div class="elementoTarjetaCompania"><p>${element.compania}</p></div>                                    
+      <div class="elementoTarjetaMatricula"><p>${element.matricula}</p></div>
+      <div class="elementoTarjetaBaliza"><p>baliza: ${array.indexOf(element) + 1}</p></div>
+      <div class="elementoTarjetaEstado"><p>${element.estado}</p></div>`;
 
     espacioAereo.appendChild(aeronaveEnEspacioAereo);
 
@@ -208,11 +203,8 @@ function declararEmergencia(matric) {
     return;
   }
 
-  // si no existen emergencias sin resolver, permite declarar una nueva emergencia
-  // alert(
-  //   ">>> ALERTA <<< (emergencia declarada para la matricula: " + matric + ")"
-  // );
   mostrarMensaje("alerta", `emergencia declarada para la matricula ${matric}`, logoAlerta)
+  document.getElementById("aterrizarAeronave").style.backgroundColor = "#FF0000"
 
   const resultadoBusquedaEntrantes = avionesEntrantes.find(
     (avion) => avion.matricula === matric
@@ -278,7 +270,7 @@ function aterrizarAvion() {
     mensaje.innerText = ""
 
   }
-
+  document.getElementById("aterrizarAeronave").style.backgroundColor = "#7a5e93"
   avionesEntrantes.shift();
   verEspacioAereo();
 }
@@ -341,6 +333,7 @@ function buscarCompania(busqueda) {
     resultadoSalientes.concat(resultadoAterrizados)
   );
 
+  // FUNCION MARCADA COMO OBSOLETA EN EL PROYECTO
   // ordeno el resultado de la concatenacion de arrays por matricula
   resultado.sort((aeroNave1, aeroNave2) => {
     if (aeroNave1.matricula === aeroNave2.matricula) {
@@ -462,37 +455,19 @@ function mostrarAlerta(texto) {
 
 // muestra las estadisticas generales
 function mostrarEstadisticas() {
-  let panelEstadisticas = document.getElementById("panel-estadisticas")
-  // panelEstadisticas.innerHTML = ""
-
-
+  // let panelEstadisticas = document.getElementById("panel-estadisticas")
   let estadistica_01 = document.getElementById("estadistica_01")
   estadistica_01.innerHTML = avionesEntrantes.length
-
-  // let cantidadAvionesEntrantes = document.createElement("h5")
-  // cantidadAvionesEntrantes.className = "mensajeEstadisticas"
-  // cantidadAvionesEntrantes.id = "cantidadAvionesEntrantes"
-  // cantidadAvionesEntrantes.innerHTML = `aviones en espera de autorizacion para el aterrizaje: ${avionesEntrantes.length}`
-
-  // let cantidadAvionesSalientes = document.createElement("h5")
-  // cantidadAvionesSalientes.className = "mensajeEstadisticas"
-  // cantidadAvionesSalientes.id = "cantidadAvionesSalientes"
-  // cantidadAvionesSalientes.innerHTML = `aviones en salida del espacio aereo: ${avionesSalientes.length}`
-
-  // let cantidadAvionesEnTierra = document.createElement("h5")
-  // cantidadAvionesEnTierra.className = "mensajeEstadisticas"
-  // cantidadAvionesEnTierra.id = "cantidadAvionesEnTierra"
-  // cantidadAvionesEnTierra.innerHTML = `aviones en tierra: ${avionesEnTierra.length}`
-  // panelEstadisticas.appendChild(cantidadAvionesEntrantes)
-  // panelEstadisticas.appendChild(cantidadAvionesSalientes)
-  // panelEstadisticas.appendChild(cantidadAvionesEnTierra)
+  let estadistica_02 = document.getElementById("estadistica_02")
+  estadistica_02.innerHTML = avionesSalientes.length
+  let estadistica_03 = document.getElementById("estadistica_03")
+  estadistica_03.innerHTML = avionesEnTierra.length
 }
 
 
 
 
 const login = () => {
-  alert("login")
   // let loginSuccessfull = false;
   // for (let a = polIntentos; a > 0; a--) {
   //     let inputPassword = prompt("ingrese password: ")
@@ -517,12 +492,42 @@ const chequearClima = () => {
     .then(response => response.json())
     .then(data => {
 
+      let clima = document.getElementById("detalle-clima")
+      let climaHumedad = document.createElement("p")
+      climaHumedad.className = "detalleClima"
+      let climaTemperatura = document.createElement("p")
+      climaTemperatura.className = "detalleClima"
+      let climaCondicion = document.createElement("p")
+      climaCondicion.className = "detalleClima"
+      climaHumedad.innerHTML = `humedad: ${data.days[0].humidity} %`
+      climaTemperatura.innerHTML = `temperatura: ${data.days[0].temp} grados`
+      climaCondicion.innerHTML = `condicion: ${data.days[0].conditions}`
 
+      switch (data.days[0].icon) {
+        case "rain":
+          document.getElementById("logo").src = "../assets/img/iconos/lluvia.jpg"
+          break
+        case "cloudy":
+          document.getElementById("logo").src = "../assets/img/iconos/cloudy.png"
+          break
+        case "partly-cloudy-day":
+          document.getElementById("logo").src = "../assets/img/iconos/partly-cloudy-day.png"
+          break
+        case "clear-day":
+          document.getElementById("logo").src = "../assets/img/iconos/clear-day.png"
+          break
+        case "wind":
+          document.getElementById("logo").src = "../assets/img/iconos/wind.png"
+          break
+        default:
+          alert("entre al default")
+          document.getElementById("logo").src = "../assets/img/iconos/weather.jpg"
+          break
+      }
 
-
-
-      console.log(data.days[0].datetime)
-      // console.log(data)
+      clima.appendChild(climaHumedad)
+      clima.appendChild(climaTemperatura) 
+      clima.appendChild(climaCondicion)
     })
     .catch(err => {
       console.error(err);
@@ -532,7 +537,7 @@ const chequearClima = () => {
 
 if (login()) {
 
-  // chequearClima()
+  chequearClima()
 
   // lista en pantalla el espacio aereo
   let btnVerEspacioAereo = document.getElementById("verEspacioAereo")
