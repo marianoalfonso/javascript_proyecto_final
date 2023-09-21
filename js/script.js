@@ -31,25 +31,6 @@ function agregarAvion(array, matric, comp, est, logo) {
   array.push({ matricula: matric, compania: comp, estado: est, logo: logo });
 }
 
-// define y devuelve un elemento para se agregado al dom
-// function agregarElemento(
-//   tipo,
-//   claseName,
-//   idName,
-//   accion,
-//   funcion,
-//   parametro,
-//   texto
-// ) {
-//   let elemento = document.createElement(tipo)
-//   elemento.className = claseName
-//   elemento.id = idName
-//   elemento.addEventListener(accion, funcion(parametro))
-// //   elemento.accion = () => funcion(parametro);
-//   elemento.innerText = texto
-//   return elemento
-// }
-
 // lista los aviones contenidos el el array recibido como parametro
 function listarAviones(array) {
 
@@ -71,10 +52,11 @@ function listarAviones(array) {
     aeronaveEnEspacioAereo.draggable = true
     aeronaveEnEspacioAereo.className = "aeronave";
     aeronaveEnEspacioAereo.innerHTML = `<div class="elementoTarjeta" ><img id="imagenTarjeta" class=""imagenTarjeta" src="${element.logo}" alt="logo compania"></div>
-      <div class="elementoTarjetaCompania"><p>${element.compania}</p></div>                                    
       <div class="elementoTarjetaMatricula"><p>${element.matricula}</p></div>
       <div class="elementoTarjetaBaliza"><p>baliza: ${array.indexOf(element) + 1}</p></div>
       <div class="elementoTarjetaEstado"><p>${element.estado}</p></div>`;
+
+      // <div class="elementoTarjetaCompania"><p>${element.compania}</p></div>     
 
     espacioAereo.appendChild(aeronaveEnEspacioAereo);
 
