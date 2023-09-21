@@ -377,25 +377,8 @@ function validarExistenciaMatricula(valor) {
   return false;
 }
 
-// datos precargados para facilitar el testeo
+// se cargan los datos de una situacion de espacio aereo existente al momento
 function cargarArrays() {
-  //   avionesEnTierra.push({ matricula: 'AAA111', compania: 'AEROLINEAS ARGENTINAS', estado: 'aterrizado', logo: logoAerolineas })
-  //   avionesEnTierra.push({ matricula: 'BBB222', compania: 'DELTA AIRLINES', estado: 'aterrizado', logo: logoDelta })
-  //   avionesEnTierra.push({ matricula: 'CCC333', compania: 'UNITED AIRLINES', estado: 'aterrizado', logo: logoUnited })
-  //   avionesEnTierra.push({ matricula: 'DDD444', compania: 'ALITALIA', estado: 'aterrizado', logo: logoAlitalia })
-  //   avionesEnTierra.push({ matricula: 'EEE555', compania: 'AEROLINEAS ARGENTINAS', estado: 'aterrizado', logo: logoAerolineas })
-  //   avionesEntrantes.push({ matricula: 'FFF666', compania: 'ALITALIA', estado: 'entrante', logo: logoAlitalia })
-  //   avionesEntrantes.push({ matricula: 'GGG777', compania: 'AEROLINEAS ARGENTINAS', estado: 'entrante', logo: logoAerolineas })
-  //   avionesEntrantes.push({ matricula: 'MDF222', compania: 'AEROLINEAS ARGENTINAS', estado: 'entrante', logo: logoAerolineas })
-  //   avionesEntrantes.push({ matricula: 'RJT566', compania: 'UNITED AIRLINES', estado: 'entrante', logo: logoUnited })
-  //   avionesEntrantes.push({ matricula: 'MDF222', compania: 'UNITED AIRLINES', estado: 'entrante', logo: logoUnited })
-  //   avionesSalientes.push({ matricula: 'HHH888', compania: 'UNITED AIRLINES', estado: 'saliente', logo: logoUnited })
-  //   avionesSalientes.push({ matricula: 'III999', compania: 'AEROLINEAS ARGENTINAS', estado: 'saliente', logo: logoAerolineas })
-  //   avionesSalientes.push({ matricula: 'ADS123', compania: 'DELTA AIRLINES', estado: 'saliente', logo: logoDelta })
-  //   avionesSalientes.push({ matricula: 'ODF222', compania: 'DELTA AIRLINES', estado: 'saliente', logo: logoDelta })
-  //   avionesSalientes.push({ matricula: 'DLF234', compania: 'AEROLINEAS ARGENTINAS', estado: 'saliente', logo: logoAerolineas })
-  //   avionesSalientes.push({ matricula: 'CDS977', compania: 'AEROLINEAS ARGENTINAS', estado: 'saliente', logo: logoAerolineas })
-
   fetch("../assets/json/avionesEntrantes.json")
     .then((response) => response.json())
     .then((response) => {
