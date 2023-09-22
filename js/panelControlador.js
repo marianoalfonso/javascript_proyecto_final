@@ -16,6 +16,13 @@ let avionesEntrantes = [];
 let avionesEnTierra = [];
 let avionesSalientes = [];
 
+//declaracion de permisos
+const permisoDeclararEmergencia = (localStorage.getItem("declararEmergencia") == "true") ? true : false
+const permisoAterrizarAeronave = (localStorage.getItem("aterrizarAeronave") == "true") ? true : false
+const permisoRecibirAeronave = (localStorage.getItem("recibirAeronave") == "true") ? true : false
+const permisoLiberarAeronave = (localStorage.getItem("liberarAeronave") == "true") ? true : false
+const permisoDespegarAeronave = (localStorage.getItem("despegarAeronave") == "true") ? true : false
+
 // genera un listado del estado actual del espacio aereo
 function verEspacioAereo() {
   listarAviones(avionesEntrantes.concat(avionesSalientes), "espacio aereo actual");
@@ -23,7 +30,6 @@ function verEspacioAereo() {
 }
 
 function verAvionesEnTierra() {
-    document.getElementById("imagen").src = "../assets/img/varios/landes-plane.png"
   listarAviones(avionesEnTierra, "aviones en tierra");
 }
 
@@ -99,204 +105,202 @@ function listarAviones(array, titulo) {
 // parametros: matric (matricula de la aeronave)
 //             comp (compania aerea)
 function recibirAvion(matric, comp) {
-  // valida formato de la matricula
-  if (!validarMatricula(matric.toUpperCase())) {
+  if (permisoRecibirAeronave) {
+    // valida formato de la matricula
+    if (!validarMatricula(matric.toUpperCase())) {
 
-    mostrarAlerta(`MATRICULA NO VALIDA !!!
+      mostrarAlerta(`MATRICULA NO VALIDA !!!
    .......................................
     El formato debe ser ###000 (ej: ABC123)`)
 
-    // valida existencia de la matricula
-  } else if (validarExistenciaMatricula(matric.toUpperCase())) {
-    alert("INFORMACION (ERROR) - matricula existente");
-    mostrarAlerta(`MATRICULA EXISTENTE !!!
+      // valida existencia de la matricula
+    } else if (validarExistenciaMatricula(matric.toUpperCase())) {
+      alert("INFORMACION (ERROR) - matricula existente");
+      mostrarAlerta(`MATRICULA EXISTENTE !!!
     .......................................
     El identificador es unico a nivel global`)
-  } else {
-    let logo = "";
-    switch (comp) {
-      case "AEROLINEAS ARGENTINAS":
-        logo = logoAerolineas;
-        break;
-      case "ALITALIA":
-        logo = logoAlitalia;
-        break;
-      case "UNITED AIRLINES":
-        logo = logoUnited;
-        break;
-      case "DELTA AIRLINES":
-        logo = logoDelta;
-        break;
-      default:
-        logo = "";
-    }
-    avionesEntrantes.push({
-      matricula: matric.toUpperCase(),
-      compania: comp,
-      estado: "entrante",
-      logo: logo,
-    });
+    } else {
+      let logo = "";
+      switch (comp.toUpperCase()) {
+        case "AEROLINEAS ARGENTINAS":
+          logo = logoAerolineas;
+          break;
+        case "ALITALIA":
+          logo = logoAlitalia;
+          break;
+        case "UNITED AIRLINES":
+          logo = logoUnited;
+          break;
+        case "DELTA AIRLINES":
+          logo = logoDelta;
+          break;
+        default:
+          logo = "";
+      }
+      avionesEntrantes.push({
+        matricula: matric.toUpperCase(),
+        compania: comp,
+        estado: "entrante",
+        logo: logo,
+      });
 
-    // actualizo la informacion de aviones entrantes en el localStorage
-    localStorage.removeItem("avionesEntrantes");
-    localStorage.setItem(
-      "aeronavesEntrantes",
-      JSON.stringify(avionesEntrantes)
-    );
-    mostrarAlerta(`la aeronave ${matric.toUpperCase()} de la compania ${comp} 
+      mostrarAlerta(`la aeronave ${matric.toUpperCase()} de la compania ${comp} 
                    ha sido recibido en el espacio aereo`)
-    verEspacioAereo()
+      verEspacioAereo()
+    }
+  } else {
+    mostrarAlerta("no posee permisos para recibir aviones al espacio aereo")
   }
+
+
 }
 
 // libera un avion del espacio aereo dejando de estar bajo el control de la torre
 function liberarAvion(matric) {
-  const indiceLiberacion = avionesSalientes.indexOf(
-    avionesSalientes.find((avion) => avion.matricula === matric)
-  );
-  if (indiceLiberacion >= 0) {
-    avionesSalientes.splice(indiceLiberacion, 1);
-    alert(
-      `INFORMACION - la aeronave con matricula ${matric} ha sido liberada del espacio aereo`
+  if (permisoLiberarAeronave) {
+    const indiceLiberacion = avionesSalientes.indexOf(
+      avionesSalientes.find((avion) => avion.matricula === matric)
     );
+    if (indiceLiberacion >= 0) {
+      avionesSalientes.splice(indiceLiberacion, 1);
+      // alert(
+      //   `INFORMACION - la aeronave con matricula ${matric} ha sido liberada del espacio aereo`
+      // );
+      mostrarMensaje(`INFORMACION - la aeronave con matricula ${matric} ha sido liberada del espacio aereo`)
+    } else {
+      // alert(`>>> ALERTA <<< ( error de comunicacion con la aeronave ${matric} )`);
+      mostrarAlerta(`>>> ALERTA <<< ( error de comunicacion con la aeronave ${matric} )`)
+    }
+    verEspacioAereo();
   } else {
-    alert(`>>> ALERTA <<< ( error de comunicacion con la aeronave ${matric} )`);
+    mostrarAlerta("no posee permisos para liberar aviones del espacio aereo")
   }
 
-  // actualizo la informacion de aviones salientes en el localStorage
-  localStorage.removeItem("avionesSalientes");
-  localStorage.setItem("aeronavesSalientes", JSON.stringify(avionesSalientes));
-
-  verEspacioAereo();
 }
 
 // al declarar una declararEmergencia
 // si es avion entrante pasa a tener ID = 0
 // si es avion saliente se saca del array de avionesSalientes y se ingresa al array de avionesEntrantes con ID = 0
 function declararEmergencia(matric) {
-  // verificar existencia de emergencia sin resolver
-  if (localStorage.getItem("emergenciaHora")) {
-    mostrarAlerta(`debe resolverse la emergencia en curso aterrizando la aeronave antes de poder declarar otra 
-      ...........................................................................................
-      matricula en emergencia: ${localStorage.getItem("emergenciaMatricula")} 
-      emergencia hora: ${localStorage.getItem("emergenciaHora")}`)
+  if (permisoDeclararEmergencia) {
+    // verificar existencia de emergencia sin resolver
+    if (localStorage.getItem("emergenciaHora")) {
+      mostrarAlerta(`debe resolverse la emergencia en curso aterrizando la aeronave antes de poder declarar otra 
+    ...........................................................................................
+    matricula en emergencia: ${localStorage.getItem("emergenciaMatricula")} 
+    emergencia hora: ${localStorage.getItem("emergenciaHora")}`)
+      return;
+    }
 
-    return;
-  }
+    mostrarMensaje("alerta", `emergencia declarada para la matricula ${matric}`, logoAlerta)
+    document.getElementById("aterrizarAeronave").style.backgroundColor = "#FF0000"
 
-  mostrarMensaje("alerta", `emergencia declarada para la matricula ${matric}`, logoAlerta)
-  document.getElementById("aterrizarAeronave").style.backgroundColor = "#FF0000"
-
-  const resultadoBusquedaEntrantes = avionesEntrantes.find(
-    (avion) => avion.matricula === matric
-  );
-  if (resultadoBusquedaEntrantes) {
-    // logica para asignar prioridad de aterrizaje
-    let indice = avionesEntrantes.indexOf(resultadoBusquedaEntrantes);
-    // elimino el objeto de la posicion original
-    avionesEntrantes.splice(indice, 1);
-    // agrego el avion al inicio del array para darle prioridad de aterrizaje
-    avionesEntrantes.unshift(resultadoBusquedaEntrantes);
-    avionesEntrantes[0].estado =
-      "EN EMERGENCIA";
-  } else {
-    // busco el avion en el listado de aviones salientes
-    const resultadoBusquedaSalientes = avionesSalientes.find(
+    const resultadoBusquedaEntrantes = avionesEntrantes.find(
       (avion) => avion.matricula === matric
     );
-    if (resultadoBusquedaSalientes) {
-      // logica para transferir a aviones entrantes y darle prioridad de aterrizaje
-      let indice = avionesSalientes.indexOf(resultadoBusquedaSalientes);
-      // saco el avion del listado de aviones salientes
-      avionesSalientes.splice(indice, 1);
-      // agrego el avion al inicio del array de aviones entrantes para darle prioridad de aterrizaje
-      avionesEntrantes.unshift(resultadoBusquedaSalientes);
+    if (resultadoBusquedaEntrantes) {
+      // logica para asignar prioridad de aterrizaje
+      let indice = avionesEntrantes.indexOf(resultadoBusquedaEntrantes);
+      // elimino el objeto de la posicion original
+      avionesEntrantes.splice(indice, 1);
+      // agrego el avion al inicio del array para darle prioridad de aterrizaje
+      avionesEntrantes.unshift(resultadoBusquedaEntrantes);
       avionesEntrantes[0].estado =
-        "EN EMERGENCIA (con prioridad para aterrizaje)";
+        "EN EMERGENCIA";
+    } else {
+      // busco el avion en el listado de aviones salientes
+      const resultadoBusquedaSalientes = avionesSalientes.find(
+        (avion) => avion.matricula === matric
+      );
+      if (resultadoBusquedaSalientes) {
+        // logica para transferir a aviones entrantes y darle prioridad de aterrizaje
+        let indice = avionesSalientes.indexOf(resultadoBusquedaSalientes);
+        // saco el avion del listado de aviones salientes
+        avionesSalientes.splice(indice, 1);
+        // agrego el avion al inicio del array de aviones entrantes para darle prioridad de aterrizaje
+        avionesEntrantes.unshift(resultadoBusquedaSalientes);
+        avionesEntrantes[0].estado =
+          "EN EMERGENCIA (con prioridad para aterrizaje)";
+      }
     }
+    // almaceno el log de emergencias en el localstorage
+    localStorage.setItem("emergenciaMatricula", matric);
+    let fecha = new Date();
+    localStorage.setItem("emergenciaHora", fecha);
+
+    let mensaje = document.getElementById("mensaje");
+    mensaje.className = "mensajeAlerta";
+    mensaje.innerHTML =
+      ">>> EMERGENCIA EN PROCESO <<< matricula: " +
+      localStorage.getItem("emergenciaMatricula") +
+      " ( " +
+      localStorage.getItem("emergenciaHora") +
+      " )";
+    verEspacioAereo();
+  } else {
+    mostrarAlerta("no posee permisos para liberar aviones del espacio aereo")
   }
-  // almaceno el log de emergencias en el localstorage
-  localStorage.setItem("emergenciaMatricula", matric);
-  let fecha = new Date();
-  localStorage.setItem("emergenciaHora", fecha);
-
-  let mensaje = document.getElementById("mensaje");
-  mensaje.className = "mensajeAlerta";
-  mensaje.innerHTML =
-    ">>> EMERGENCIA EN PROCESO <<< matricula: " +
-    localStorage.getItem("emergenciaMatricula") +
-    " ( " +
-    localStorage.getItem("emergenciaHora") +
-    " )";
-
-  verEspacioAereo();
 }
 
 // aterriza el avion con indice 0
 function aterrizarAvion() {
-  if (localStorage.getItem("emergenciaMatricula")) {
-    // elimino las claves referentes a emergencias del localStorage
-    localStorage.removeItem("emergenciaHora");
-    localStorage.removeItem("emergenciaMatricula");
-
-    // elimino el mensaje de alerta
-    // let contenedor = document.querySelector(".panel-informacion");
-    // console.log(contenedor)
-    // let item = contenedor.querySelector(".panel-informacion:nth-child(1)");
-    // console.log(item)
-    // contenedor.removeChild(item); // Desconecta el segundo .item
-
-    // elimino el mensaje de alerta
-    let mensaje = document.getElementById("mensaje")
-    mensaje.innerText = ""
-
+  if (permisoAterrizarAeronave) {
+    if (localStorage.getItem("emergenciaMatricula")) {
+      // elimino las claves referentes a emergencias del localStorage
+      localStorage.removeItem("emergenciaHora");
+      localStorage.removeItem("emergenciaMatricula");
+      // elimino el mensaje de alerta
+      let mensaje = document.getElementById("mensaje")
+      mensaje.innerText = ""
+    }
+    document.getElementById("aterrizarAeronave").style.backgroundColor = "#7a5e93"
+    avionesEntrantes.shift();
+    verEspacioAereo();
+  } else {
+    mostrarAlerta("no posee permisos para autorizar aterrizajes")
   }
-  document.getElementById("aterrizarAeronave").style.backgroundColor = "#7a5e93"
-  avionesEntrantes.shift();
-  verEspacioAereo();
 }
 
 // autoriza el despegue de una avion en base a la matricula recibida como parametro
 // saca el avion del grupo de aviones en tierra y lo agrega al grupo aviones salientes
 function despegarAvion(matric) {
-  const indiceDespegue = avionesEnTierra.indexOf(
-    avionesEnTierra.find((avion) => avion.matricula === matric)
-  );
-  if (indiceDespegue >= 0) {
-    const companiaAerea = avionesEnTierra[indiceDespegue].compania;
-    let logo = "";
-    switch (companiaAerea) {
-      case "AEROLINEAS ARGENTINAS":
-        logo = logoAerolineas;
-        break;
-      case "ALITALIA":
-        logo = logoAlitalia;
-        break;
-      case "UNITED AIRLINES":
-        logo = logoUnited;
-        break;
-      case "DELTA AIRLINES":
-        logo = logoDelta;
-        break;
-      default:
-        logo = "";
+  if(permisoDespegarAeronave) {
+    const indiceDespegue = avionesEnTierra.indexOf(
+      avionesEnTierra.find((avion) => avion.matricula === matric)
+    );
+    if (indiceDespegue >= 0) {
+      const companiaAerea = avionesEnTierra[indiceDespegue].compania;
+      let logo = "";
+      switch (companiaAerea) {
+        case "AEROLINEAS ARGENTINAS":
+          logo = logoAerolineas;
+          break;
+        case "ALITALIA":
+          logo = logoAlitalia;
+          break;
+        case "UNITED AIRLINES":
+          logo = logoUnited;
+          break;
+        case "DELTA AIRLINES":
+          logo = logoDelta;
+          break;
+        default:
+          logo = "";
+      }
+      avionesEnTierra.splice(indiceDespegue, 1);
+      agregarAvion(avionesSalientes, matric, companiaAerea, "saliente", logo);
+      alert(
+        `INFORMACION (la aeronave con matricula ${matric} ha sido autorizado para el despegue)`
+      );
+    } else {
+      alert(
+        ">>> ALERTA <<< (se produjo un error de comunicacion al autorizar el despegue)"
+      );
     }
-    avionesEnTierra.splice(indiceDespegue, 1);
-    agregarAvion(avionesSalientes, matric, companiaAerea, "saliente", logo);
-    alert(
-      `INFORMACION (la aeronave con matricula ${matric} ha sido autorizado para el despegue)`
-    );
+    verEspacioAereo();
   } else {
-    alert(
-      ">>> ALERTA <<< (se produjo un error de comunicacion al autorizar el despegue)"
-    );
+    mostrarAlerta("no posee permisos para autorizar despegues")
   }
-
-  // actualizo la informacion de aviones salientes en el localStorage
-  localStorage.removeItem("avionesSalientes");
-  localStorage.setItem("aeronavesSalientes", JSON.stringify(avionesSalientes));
-
-  verEspacioAereo();
 }
 
 // busca por compania aerea entre los aviones entrantes, salientes y aterrizados
@@ -489,12 +493,19 @@ const chequearClima = () => {
       }
 
       clima.appendChild(climaHumedad)
-      clima.appendChild(climaTemperatura) 
+      clima.appendChild(climaTemperatura)
       clima.appendChild(climaCondicion)
     })
     .catch(err => {
       console.error(err);
     });
+
+}
+
+// leo los permisos desde el localstorgage
+const leerPermisos = () => {
+
+
 
 }
 
@@ -579,14 +590,6 @@ if (login()) {
       localStorage.getItem("emergenciaHora") +
       " )";
   }
-
-  // verifica actividad existente en el espacio aereo
-  // if (!localStorage.getItem("aeronavesEntrantes")) {
-  //     avionesEntrantes = JSON.parse(localStorage.getItem("aeronavesEntrantes"))
-  //     console.log(avionesEntrantes)
-  // } else {
-  //     alert("existe")
-  // }
 
   cargarArrays();
   Swal.fire("bienvenido !!!", "espacio aereo actual cargado", "info");

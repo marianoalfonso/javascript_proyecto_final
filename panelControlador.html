@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>control de trafico aereo</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- toastify CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <link rel="stylesheet" type="text/css" href="./css/style.css" />
+  <!-- sweetalert JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- toastify JS -->
+  <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!-- Bootstrap JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script defer src="./js/panelControlador.js"></script>
+</head>
+
+<body>
+  <header class="cabecera">
+    <nav class="navbar navbar-light bg-dark justify-content-between">
+      <img src="./assets/img/varios/logo_aeropuertos2000.png" class="mainLogo" alt="logo aeropuertos 2000">
+      <div class="main-title">
+        <h3>Control de espacio Aereo</h3>
+        <h5>Radar Ezeiza</h5>
+      </div>
+      <!-- panel informe de clima -->
+      <article class="paneles" id="panel-clima">
+        <div class="logoClima">
+          <img src="" class="logo" id="logo" alt="logo clima">
+        </div>
+        <div class="clima" id="detalle-clima"></div>
+      </article>
+    </nav>
+  </header>
+
+
+
+  <section class="grid-container">
+    <!-- panel de mensajes de emergencia -->
+    <header class="panel-informacion" id="panel-informacion">
+      <p class="mensaje" id="mensaje"></p>
+    </header>
+    <div class="panel-visualizacion" id="panel-visualizacion">
+    </div>
+
+    <div class="panel-acciones">
+
+      <article class="paneles">
+        <h4 class="tituloPanel">panel de acciones</h4>
+        <div class="acciones-directas">
+          <div class="botonVerEspacioAereo">
+            <img src="./assets/img/iconos/espacio-arereo.png" class="logoBotones" alt="imagen de espacio aereo">
+            <button class="btnAcciones" id="verEspacioAereo">ver espacio aereo</button>
+          </div>
+          <div class="botonVerAvionesEnTierra">
+            <img src="./assets/img/iconos/avion-aterrizado_2.png" class="logoBotones" alt="imagen de avion en tierra">
+            <button class="btnAcciones" id="avionesEnTierra">ver aeronaves en tierra</button>
+          </div>
+          <div class="botonAterrizarAvion">
+            <img src="./assets/img/iconos/avion-llegando.png" class="logoBotones" alt="imagen de avion en tierra">
+            <button class="btnAcciones" id="aterrizarAeronave">aterrizar aeronave</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="paneles">
+        <h4 class="tituloPanel">ingreso al espacio aereo</h4>
+        <div class="recibirAeronave">
+          <label for="matricula">matricula</label>
+          <input type="text" id="matricula" placeholder="XXX000">
+          <label for="companiaAerea">compania</label>
+          <select id="companiaAerea">
+            <option value="AEROLINEAS ARGENTINAS" selected>Aerolineas Argentinas</option>
+            <option value="ALITALIA">Alitalia</option>
+            <option value="DELTA">Delta Airlines</option>
+            <option value="UNITED AIRLINES">United Airlines</option>
+          </select>
+        </div>
+        <button class="btnAcciones" id="recibirAeronave">autorizar</button>
+      </article>
+
+
+      <!-- busqueda de aerolinea -->
+      <article class="paneles">
+        <h4 class="tituloPanel">busqueda por aerolinea</h4>
+        <div class="busquedaAerolinea" id="busquedaAerolinea">
+          <label for="aerolinea">ingrese aerolinea</label>
+          <input type="text" id="nombreAerolinea">
+        </div>
+        <button class="btnAcciones" id="btnBuscarAerolinea">buscar</button>
+      </article>
+
+      <article class="paneles" id="panel-estadisticas">
+        <h4 class="tituloPanel">panel de estadisticas</h4>
+        <div class="estadisticas">
+          <div class="estadistica">
+            <p>entrantes</p>
+            <img src="./assets/img/iconos/avion-llegando.png" class="logoBotones" alt="imagen de espacio aereo">
+            <h4 class="dato_estadistica" id="estadistica_01">0</h4>
+          </div>
+          <div class="estadistica">
+            <p>salientes</p>
+            <img src="./assets/img/iconos/avion-saliendo.png" class="logoBotones" alt="imagen de avion en tierra">
+            <h4 class="dato_estadistica" id="estadistica_02">0</h4>
+          </div>
+          <div class="estadistica">
+            <p>aterrizados</p>
+            <img src="./assets/img/iconos/avion-aterrizado_2.png" class="logoBotones" alt="imagen de avion en tierra">
+            <h4 class="dato_estadistica" id="estadistica_03">0</h4>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+</body>
+
+</html>

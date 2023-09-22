@@ -229,11 +229,12 @@
     justify-items: center;
     align-items: center;
     border: dashed 1px black;
+    background-color: rgb(206, 228, 206);
 }
 
 .estadistica {
     top: 50%;
-    padding: 5px;
+    /* padding: 5px; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
