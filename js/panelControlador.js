@@ -194,11 +194,7 @@ function declararEmergencia(matric) {
 
     let mensaje = document.getElementById("mensaje")
     mensaje.className = "mensajeAlerta"
-    mensaje.innerHTML =
-      ">>> EMERGENCIA EN PROCESO <<< matricula: " +
-      localStorage.getItem("emergenciaMatricula") +
-      " ( " +
-      localStorage.getItem("emergenciaHora") + " )"
+    mensaje.innerHTML = `">>> EMERGENCIA EN PROCESO <<<  matricula: ${matric}`
     verEspacioAereo()
   } else {
     mostrarAlerta("no posee permisos para declarar emergencias")
