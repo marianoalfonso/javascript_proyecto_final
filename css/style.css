@@ -4,6 +4,63 @@
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
+/* inicio pantalla 1 */
+
+.container {
+    margin-top: 100px;
+    background-image: url('../assets/img/varios/bck-permisos_3.png');
+    background-size: cover;
+    background-position:center;
+}
+
+.container h2 {
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 30px;
+}
+
+.permisos {
+    padding: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+}
+
+.form-group label {
+    margin-right: 12px;
+}
+
+.btnSetearPermisos {
+    padding: 10px;
+    width: 20%;
+    text-align: center;
+}
+
+#btnSetearPermisos {
+    background-color: #7a5e93;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+}
+
+.ingresoPanel {
+    background-color: #7a5e93;
+    margin-top: 25px;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: medium;
+    font-weight: bold;
+    border-radius: 12px;
+}
+
+/* fin pantalla 1 */
+
 .mainLogo {
     height: 70px;
     width: 140px;
@@ -123,6 +180,7 @@
 .logoBotones {
     height: 60px;
     width: 60px;
+    margin-right: 10px;
 }
 
 .panel-acciones {

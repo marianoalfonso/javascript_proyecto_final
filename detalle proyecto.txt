@@ -1,44 +1,29 @@
 Sistema generado y probado desde VSCode, utilizando LiveServer para su ejecucion.
-password para el ingreso: [operador1]
 
-El sistema pregunta si se desea cargar un array de elementos para testear el sistema, en caso
-de aceptarse, se carga un lote de datos de aviones entrantes, salientes y aterrizados, caso  contrario
-los arrays se inicializan vacios, debiendo alimentarse el sistema mediante las opciones que se
-ofrecen en la interfaz
+Al inicio de la aplicacion, se solicita setear los permisos del operador CoderHouse.
+Los mismos estan todos habilitados por defecto, para habilitar/deshabilitar cualquiera de ellos
+debe marcarse/desmarcarse la casilla de verificacion.
+Estos permisos se almacenan el el localStorage, los cuales mas tarde en el modulo de panel principal son leidos
+y parseados nuevamente
 
->>> localStorage <<<
+Al ingresarse al panel principal, se carga una situacion de espacio aereo ficticia desde 3 archivos Json
+	avionesAterrizados.json
+	avionesEntrantes.json
+	avionesSalientes.json
+
+. Se utiliza la api de la empresa VisualCrossing para la obtencion dinamica del clima en la ciudad de
+    Buenos Aires, simplificandose a obtener unicamente los datos de la hora 12:00 pm del dia en el que se ejecuta
+    la aplicacion. En base a esto, se genera el panel de informacion de clima en la seccion superior derecha.
 
 . Al declarar un avion en emergencia se genera la clave "emergenciaHora" y "emergenciaMatricula" 
     en el localStorage.
+
 . Al autorizar el aterrizaje de la aeronave, se eliminan estas claves del localStorage.
-. En caso de cerrarse el programa, cuando vuelve a iniciarse se verifica el contenido del localStorage 
-    para identificar si existe alguna emergencia activa y se muestra en un mensaje resaltado en la parte 
-    superior de la pantalla.
+
 . No puede declararse otro avion en emergencia si existe alguna emergencia declarada sin resolver, esto se
     verifica tambien contra el localStorage
 
-. Se guarda como objeto en el localStorage la informacion de los diferentes arrays que gestionan el estado, 
-    esto esta pensado a futuro para poder recuperar el estado del espacio aereo en caso de catastrofe en 
-    el sistema (cuelgue del navegador, cierre involuntario del navegador, etc.)
-
-    > al recibir un avion en el espacio aereo 
-        se borra la clave "avionesEntrantes" del localStorage y se vuelve a generar con la 
-        data del array actualizado
-
-    > al liberar un avion existente del espacio aereo 
-        se borra la clave "avionesSalientes" del localStorage y se vuelve a generar con la informacion 
-        del array actualizado
-
-    > al autorizar el despegue de un avion
-        se borra la clave "avionesSalientes" del localStorage y se vuelve a generar con la informacion 
-        del array actualizado
-
-
 >>> dom y eventos <<<
-
-Se genero un diseño basico pero funcional sobre el layout de la pagina. Para el proyecto final
-  se tiene como objetivo agregar las caracteristicas de las clases finales y la mejora del CSS
-  del proyecto en su totalidad .
 
 . Se genera de forma dinamica los listados en pantalla
 
@@ -78,3 +63,46 @@ Se genero un diseño basico pero funcional sobre el layout de la pagina. Para el
         es el aterrizaje, el cual se realiza desde el boton del panel de acciones {aterrizar aeronave}
         Tambien se muestra en la parte superior de la pantalla un aviso en rojo de la situacion
             de emergencia, el cual desaparece una vez aterrizado el avion
+
+reglas de uso
+
+Ver espacio aereo:
+
+    > para listar el espacio aereo en el panel de visualizaciones, debe presionarse el boton {ver espacio aereo}
+	se mostrara el detalle de las aeronaves con estado saliente, entrante y en emergencia
+
+Aterrizar un avion:
+
+    > la accion de aterrizaje esta centralizada en el boton {aterrizar aeronave}. Esta accion "siempre"
+	aterriza la aeronave con baliza mas baja dentro del grupo de aviones entrantes
+
+Declarar una emergencia:
+
+    > la accion de declarar una emergencia puede ser aplicada a cualquier avion ya sea que se encuentre
+	en estado entrante o en estado saliente
+
+    > al ser declarada la emergencia, el avion pasa a tener la baliza con prioridad para el aterrizaje
+	no importa en que estado se encontrara al momento de la accion de declaracion
+
+    > al declararse una emergencia, se activa un aviso de emergencia en la barra superior de color rojo,
+	y el boton de {aterrizar aeronave} se activa en rojo
+
+Autorizacion de ingreso al espacio aereo:
+
+     > mediante el panel lateral para tal accion, debe ingresarse la matricula de la aeronave a ingresarse
+	manteniendo el formato de 3 caracteres alfanumericos seguidos de 3 caracteres numericos, lo cual es
+	validado por la aplicacion para autorizar el ingreso.
+
+Buscar aeronaves por compania aerea
+
+     > mediante la opcion del panel lateral de busqueda por aerolinea, podra obtenerse el listado de aeronaves
+	con estados saliente y entrante de la coincidencia de la busqueda del texto ingresado
+
+Panel de estadisticas
+
+     > este panel ubicado en la parte inferior derecha, muestra informacion sobre la cantidad de aeronaves
+	discriminadas en:
+
+	. aeronaves entrantes
+	. aeronaves salientes
+	. aeronaves en tierra
