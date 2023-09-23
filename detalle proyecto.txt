@@ -1,5 +1,7 @@
 Sistema generado y probado desde VSCode, utilizando LiveServer para su ejecucion.
 
+archivo de inicio --> INDEX.HTML
+
 Al inicio de la aplicacion, se solicita setear los permisos del operador CoderHouse.
 Los mismos estan todos habilitados por defecto, para habilitar/deshabilitar cualquiera de ellos
 debe marcarse/desmarcarse la casilla de verificacion.
